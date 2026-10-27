@@ -1,0 +1,42 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% \putimage : スライド左上基準の割合指定で画像を貼る
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% 使い方: \putimage[オプション]{x}{y}{画像ファイル名}
+%   x, y : 画像左上の位置。スライド幅・高さに対する割合 (0〜1)
+%   オプション (どれか1つ。省略時は原寸):
+%     width=0.3  幅をスライド幅に対する割合で指定
+%     height=0.4 高さをスライド高さに対する割合で指定
+%     right=0.8  右上の点のx座標(割合)を指定 (幅 = right - x)
+%     scale=0.5  原寸に対する倍率
+%
+% 例: \putimage[width=0.3]{0.6}{0.2}{fig/sample.png}
+%
+% プリアンブルに追加 (packages の項):
+\usepackage[overlay]{textpos} % 本文の流れに影響しない絶対配置
+
+% ここから下は @ を使うので .sty 内、または \makeatletter 内に置く
+\newsavebox{\ka@imgbox}
+\newlength{\ka@imglen}
+
+\pgfkeys{
+  /ka@img/width/.code  = {\def\ka@img@opts{width=#1\paperwidth}},
+  /ka@img/height/.code = {\def\ka@img@opts{height=#1\paperheight}},
+  /ka@img/scale/.code  = {\def\ka@img@opts{scale=#1}},
+  /ka@img/right/.code  = {\def\ka@img@right{#1}},
+}
+
+\newcommand{\putimage}[4][]{%
+  \begingroup
+  \def\ka@img@opts{}%
+  \let\ka@img@right\@empty
+  \pgfkeys{/ka@img/.cd, #1}%
+  \ifx\ka@img@right\@empty\else
+    \pgfmathsetlength{\ka@imglen}{(\ka@img@right-#2)*\paperwidth}%
+    \edef\ka@img@opts{width=\the\ka@imglen}%
+  \fi
+  \sbox{\ka@imgbox}{\includegraphics[\ka@img@opts]{#4}}%
+  \begin{textblock*}{\wd\ka@imgbox}(#2\paperwidth,#3\paperheight)%
+    \usebox{\ka@imgbox}%
+  \end{textblock*}%
+  \endgroup
+}
