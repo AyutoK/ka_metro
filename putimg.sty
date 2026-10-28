@@ -12,7 +12,7 @@
 % 例: \putimage[width=0.3]{0.6}{0.2}{fig/sample.png}
 %
 % プリアンブルに追加 (packages の項):
-\usepackage[overlay]{textpos} % 本文の流れに影響しない絶対配置
+\usepackage[overlay, absolute]{textpos} % 本文の流れに影響しない絶対配置
 
 % ここから下は @ を使うので .sty 内、または \makeatletter 内に置く
 \newsavebox{\ka@imgbox}
@@ -34,9 +34,15 @@
     \pgfmathsetlength{\ka@imglen}{(\ka@img@right-#2)*\paperwidth}%
     \edef\ka@img@opts{width=\the\ka@imglen}%
   \fi
-  \sbox{\ka@imgbox}{\includegraphics[\ka@img@opts]{#4}}%
+  \edef\ka@img@args{[\ka@img@opts]{#4}}%
+
+  \sbox{\ka@imgbox}{\expandafter\includegraphics\ka@img@args}%
+  \TPshowboxestrue
+  \textblockorigin{0mm}{0mm} % スライド左上を原点にする
   \begin{textblock*}{\wd\ka@imgbox}(#2\paperwidth,#3\paperheight)%
+    \centering
     \usebox{\ka@imgbox}%
   \end{textblock*}%
+  \TPshowboxesfalse
   \endgroup
 }
