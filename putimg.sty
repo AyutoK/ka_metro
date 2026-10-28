@@ -37,12 +37,12 @@
   \edef\ka@img@args{[\ka@img@opts]{#4}}%
 
   \sbox{\ka@imgbox}{\expandafter\includegraphics\ka@img@args}%
-  \TPshowboxestrue
+  %\TPshowboxestrue %for debugging
   \textblockorigin{0mm}{0mm} % スライド左上を原点にする
   \begin{textblock*}{\wd\ka@imgbox}(#2\paperwidth,#3\paperheight)%
     \centering
     \usebox{\ka@imgbox}%
   \end{textblock*}%
-  \TPshowboxesfalse
+  %\TPshowboxesfalse %for debugging too
   \endgroup
 }

@@ -70,7 +70,7 @@
 % use: \begin{roundbox}[background color]{width of the box} ... \end{roundbox}
 \newenvironment{roundbox}[2][yellow!50]{
 \setbeamercolor{rdbx}{fg=black,bg=#1}
-\begin{beamercolorbox}[sep=1em, wd=#2, rounded=True]{rdbx}
+\begin{beamercolorbox}[sep=1em, wd=#2, rounded=true]{rdbx}
 }{
 \end{beamercolorbox}
 }
@@ -113,6 +113,11 @@
                          series=\bfseries}
 
 
+% font color
+\providecolor{AlertColor}{HTML}{EB811B}
+
+\setbeamercolor{alerted text}{fg=AlertColor}%{fg=orange!30!yellow}
+
 % block environments
 \setbeamertemplate{blocks}[rounded][shadow=false]
 %% font size
@@ -120,18 +125,16 @@
 \setbeamerfont{block title alerted}{size=\large}
 %% Change alert block colors
 %%% 1- Block title (background and text)
-\setbeamercolor{block title alerted}{fg=mDarkTeal, bg=mLightBrown!45!yellow!45}
+\setbeamercolor{block title alerted}{fg=AlertColor, bg=AlertColor!30}
 \setbeamercolor{block title example}{bg=green!20!white}
 %%% 2- Block body (background)
-\setbeamercolor{block body alerted}{bg=mLightBrown!25}
+\setbeamercolor{block body alerted}{bg=AlertColor!20}
 \setbeamercolor{block body example}{bg=green!10!white}
 
-% font color
-\setbeamercolor{alarted text}{bg=orange!30!yellow}
 
 % setting framecolor title & background
 \providecolor{mainframe}{RGB}{0,255,0}
-\providecolor{frametitlefont}{RGB}{255,255,255}
+\providecolor{framenumcolor}{RGB}{255,255,255}
 
 \setbeamercolor{frametitle}{bg=mainframe}
 
@@ -139,7 +142,7 @@
 
 \setbeamercolor{progress bar}{fg=mainframe,bg=mainframe!50!black!30}
 
-\setbeamercolor{pagenum}{fg=frametitlefont}
+\setbeamercolor{pagenum}{fg=framenumcolor}
 
 % setting frametitle height
 \setlength{\metropolis@frametitle@padding}{1.2ex}
